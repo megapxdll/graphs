@@ -3,9 +3,40 @@
 public class main {
 
     public static void main(String[] args) {
-        testGraph();
-        testDFS();
-        testBFS();
+        //testGraph();
+        //testDFS();
+        //testBFS();
+        testMin();
+    }
+
+    private static void testMin() {
+        Graph graph = new GraphImpl(10);
+        graph.addVertex("Moskva");
+        graph.addVertex("Tula");
+        graph.addVertex("Ryazan");
+        graph.addVertex("Kaluga");
+        graph.addVertex("Lipetsk");
+        graph.addVertex("Tambov");
+        graph.addVertex("Orel");
+        graph.addVertex("Saratov");
+        graph.addVertex("Kursk");
+        graph.addVertex("Voronezh");
+
+        //first
+        graph.addEdge("Moskva", "Tula", "Ryazan", "Kaluga");
+        //way#1
+        graph.addEdge("Tula", "Lipetsk");
+        graph.addEdge("Lipetsk", "Voronezh");
+        //way#2
+        graph.addEdge("Ryazan", "Tambov");
+        graph.addEdge("Tambov", "Saratov");
+        graph.addEdge("Saratov", "Voronezh");
+        //way#3
+        graph.addEdge("Kaluga", "Orel");
+        graph.addEdge("Orel", "Kursk");
+        graph.addEdge("Kursk", "Voronezh");
+
+        graph.bfs("Moskva");
     }
 
     private static void testGraph() {
