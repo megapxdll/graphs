@@ -36,7 +36,7 @@ public class main {
         graph.addEdge("Orel", "Kursk");
         graph.addEdge("Kursk", "Voronezh");
 
-        graph.bfs("Moskva");
+        graph.bfs("Moskva", "Voronezh");
     }
 
     private static void testGraph() {
@@ -91,6 +91,5 @@ public class main {
         graph.addEdge("C", "F");
         graph.addEdge("D", "G");
 
-        graph.bfs("A");
     }
 }

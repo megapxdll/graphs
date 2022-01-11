@@ -24,7 +24,15 @@ public class GraphImpl implements Graph {
         }
 
         adjMatrix[startIndex][endIndex] = 1;
+        //adjMatrix[startIndex][endIndex] = edgeRandomizer();
         return false;
+    }
+
+    private int edgeRandomizer() {
+        int a = 3;
+        int b = 9;
+        int random = a + (int) (Math.random() * b);
+        return random;
     }
 
     private int indexOf(String label) {
@@ -64,13 +72,16 @@ public class GraphImpl implements Graph {
         for (int i = 0; i < getSize(); i++) {
             stringBuilder.append(vertexList.get(i));
             for (int j = 0; j < getSize(); j++) {
-                if (adjMatrix[i][j] == 1) {
+                if (adjMatrix[i][j] != 0) {
                     stringBuilder.append("->").append(vertexList.get(j));
                 }
             }
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
+    }
+
+    public void findMinPath(String startLabel, String finalLabel) {
     }
 
     @Override
@@ -101,14 +112,14 @@ public class GraphImpl implements Graph {
     }
 
     @Override
-    public void bfs(String startLabel) {
+    public void bfs(String startLabel, String finalLabel) {
         int startIndex = indexOf(startLabel);
+        int finalIndex = indexOf(finalLabel);
         if(startIndex == -1) {
             throw new IllegalArgumentException("Wrong vertex" + startLabel);
         }
 
-        Queue<Vertex> queue = new LinkedList<>() {
-        };
+        Queue<Vertex> queue = new LinkedList<>();
 
         resetVertexVisited();
 
@@ -131,7 +142,7 @@ public class GraphImpl implements Graph {
     private Vertex getNearUnvisitedVertex(Vertex vertex) {
         int currentIndex = vertexList.indexOf(vertex);
         for (int i = 0; i < getSize(); i++) {
-            if(adjMatrix[currentIndex][i] == 1 && !vertexList.get(i).isVisited()) {
+            if(adjMatrix[currentIndex][i] != 0 && !vertexList.get(i).isVisited()) {
                 return vertexList.get(i);
             }
         }

@@ -15,5 +15,5 @@ public interface Graph {
     void dfs(String startLabel);
 
     //Breadth-first search
-    void bfs(String startLabel);
+    void bfs(String startLabel, String finalLabel);
 }
