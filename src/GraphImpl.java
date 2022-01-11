@@ -2,11 +2,11 @@ import java.util.*;
 
 public class GraphImpl implements Graph {
     private final List<Vertex> vertexList;
-    private final boolean[][] adjMatrix;
+    private final int[][] adjMatrix;
 
     public GraphImpl(int maxVertexCount) {
         this.vertexList = new ArrayList<>(maxVertexCount);
-        this.adjMatrix = new boolean[maxVertexCount][maxVertexCount];
+        this.adjMatrix = new int[maxVertexCount][maxVertexCount];
     }
 
     @Override
@@ -23,7 +23,7 @@ public class GraphImpl implements Graph {
             return false;
         }
 
-        adjMatrix[startIndex][endIndex] = true;
+        adjMatrix[startIndex][endIndex] = 1;
         return false;
     }
 
@@ -64,7 +64,7 @@ public class GraphImpl implements Graph {
         for (int i = 0; i < getSize(); i++) {
             stringBuilder.append(vertexList.get(i));
             for (int j = 0; j < getSize(); j++) {
-                if (adjMatrix[i][j]) {
+                if (adjMatrix[i][j] == 1) {
                     stringBuilder.append("->").append(vertexList.get(j));
                 }
             }
@@ -131,7 +131,7 @@ public class GraphImpl implements Graph {
     private Vertex getNearUnvisitedVertex(Vertex vertex) {
         int currentIndex = vertexList.indexOf(vertex);
         for (int i = 0; i < getSize(); i++) {
-            if(adjMatrix[currentIndex][i] && !vertexList.get(i).isVisited()) {
+            if(adjMatrix[currentIndex][i] == 1 && !vertexList.get(i).isVisited()) {
                 return vertexList.get(i);
             }
         }
