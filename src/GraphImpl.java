@@ -23,9 +23,20 @@ public class GraphImpl implements Graph {
             return false;
         }
 
-        adjMatrix[startIndex][endIndex] = 1;
+        adjMatrix[startIndex][endIndex] = edgeRandomizer();
         //adjMatrix[startIndex][endIndex] = edgeRandomizer();
         return false;
+    }
+
+    @Override
+    public boolean addEdge(String startLabel, String secondLabel, String... others) {
+        boolean result = addEdge(startLabel, secondLabel);
+
+        for (String other: others) {
+            result &= addEdge(startLabel, other);
+        }
+
+        return result;
     }
 
     private int edgeRandomizer() {
@@ -45,17 +56,6 @@ public class GraphImpl implements Graph {
     }
 
     @Override
-    public boolean addEdge(String startLabel, String secondLabel, String... others) {
-        boolean result = addEdge(startLabel, secondLabel);
-
-        for (String other: others) {
-            result &= addEdge(startLabel, other);
-        }
-
-        return result;
-    }
-
-    @Override
     public int getSize() {
         return vertexList.size();
     }
@@ -63,6 +63,17 @@ public class GraphImpl implements Graph {
     @Override
     public void display() {
         System.out.println(this);
+    }
+
+    public void displayMatrix() {
+        int count = 0;
+        for (int i = 0; i < adjMatrix.length; i++) {
+            for (int j = 0; j < adjMatrix.length; j++) {
+                System.out.print(adjMatrix[count][j] + " ");
+            }
+            System.out.println();
+            count++;
+        }
     }
 
     @Override

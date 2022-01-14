@@ -10,7 +10,7 @@ public class main {
     }
 
     private static void testMin() {
-        Graph graph = new GraphImpl(10);
+        GraphImpl graph = new GraphImpl(10);
         graph.addVertex("Moskva");
         graph.addVertex("Tula");
         graph.addVertex("Ryazan");
@@ -37,6 +37,8 @@ public class main {
         graph.addEdge("Kursk", "Voronezh");
 
         graph.bfs("Moskva", "Voronezh");
+
+        graph.displayMatrix();
     }
 
     private static void testGraph() {
