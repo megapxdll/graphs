@@ -5,7 +5,8 @@ public interface Graph {
     void addVertex(String label);
 
     boolean addEdge(String startLabel, String secondLabel, String... others);
-    boolean addEdge(String startLabel, String secondLabel);
+
+    boolean addEdge(String startLabel, String secondLabel, int value);
 
     int getSize();
 
@@ -15,5 +16,5 @@ public interface Graph {
     void dfs(String startLabel);
 
     //Breadth-first search
-    void bfs(String startLabel);
+    void bfs(String startLabel, String finalLabel);
 }
