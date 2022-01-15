@@ -25,16 +25,16 @@ public class main {
         //first
         graph.addEdge("Moskva", "Tula", "Ryazan", "Kaluga");
         //way#1
-        graph.addEdge("Tula", "Lipetsk");
-        graph.addEdge("Lipetsk", "Voronezh");
+        graph.addEdge("Tula", "Lipetsk", 2);
+        graph.addEdge("Lipetsk", "Voronezh", 3);
         //way#2
-        graph.addEdge("Ryazan", "Tambov");
-        graph.addEdge("Tambov", "Saratov");
-        graph.addEdge("Saratov", "Voronezh");
+        graph.addEdge("Ryazan", "Tambov", 5);
+        graph.addEdge("Tambov", "Saratov", 3);
+        graph.addEdge("Saratov", "Voronezh", 1);
         //way#3
-        graph.addEdge("Kaluga", "Orel");
-        graph.addEdge("Orel", "Kursk");
-        graph.addEdge("Kursk", "Voronezh");
+        graph.addEdge("Kaluga", "Orel", 2);
+        graph.addEdge("Orel", "Kursk", 7);
+        graph.addEdge("Kursk", "Voronezh", 1);
 
         graph.bfs("Moskva", "Voronezh");
 

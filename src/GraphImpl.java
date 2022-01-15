@@ -3,6 +3,9 @@ import java.util.*;
 public class GraphImpl implements Graph {
     private final List<Vertex> vertexList;
     private final int[][] adjMatrix;
+    private int minPAth = 0;
+    private int [] paths;
+    List<Integer> values = new LinkedList<>();
 
     public GraphImpl(int maxVertexCount) {
         this.vertexList = new ArrayList<>(maxVertexCount);
@@ -15,7 +18,7 @@ public class GraphImpl implements Graph {
     }
 
     @Override
-    public boolean addEdge(String startLabel, String secondLabel) {
+    public boolean addEdge(String startLabel, String secondLabel, int value) {
         int startIndex = indexOf(startLabel);
         int endIndex = indexOf(secondLabel);
 
@@ -23,17 +26,17 @@ public class GraphImpl implements Graph {
             return false;
         }
 
-        adjMatrix[startIndex][endIndex] = edgeRandomizer();
+        adjMatrix[startIndex][endIndex] = value;
         //adjMatrix[startIndex][endIndex] = edgeRandomizer();
         return false;
     }
 
     @Override
     public boolean addEdge(String startLabel, String secondLabel, String... others) {
-        boolean result = addEdge(startLabel, secondLabel);
+        boolean result = addEdge(startLabel, secondLabel, 1);
 
         for (String other: others) {
-            result &= addEdge(startLabel, other);
+            result &= addEdge(startLabel, other, 1);
         }
 
         return result;
@@ -126,7 +129,8 @@ public class GraphImpl implements Graph {
     public void bfs(String startLabel, String finalLabel) {
         int startIndex = indexOf(startLabel);
         int finalIndex = indexOf(finalLabel);
-        if(startIndex == -1) {
+
+        if(startIndex == -1 && finalIndex == -1) {
             throw new IllegalArgumentException("Wrong vertex" + startLabel);
         }
 
@@ -135,25 +139,71 @@ public class GraphImpl implements Graph {
         resetVertexVisited();
 
         Vertex vertex = vertexList.get(startIndex);
-
         visitVertex(queue, vertex);
 
+        for (int i = 0; i < getSize(); i++) {
+            if(adjMatrix[indexOf(vertex.getLabel())][i] != 0) {
+                values.add(getEdge(indexOf(vertex.getLabel()), i));
+            }
+        }
+        System.out.println(values);
         while (!queue.isEmpty()) {
             vertex = getNearUnvisitedVertex(queue.peek());
             if(vertex != null) {
                 visitVertex(queue, vertex);
+                result(vertex);
             } else {
+                System.out.println(queue);
                 queue.remove();
             }
         }
 
+        /*
+        for (int i = 0; i < getSize(); i++) {
+            if (adjMatrix[i][finalIndex] != 0) {
+                values.add(adjMatrix[i][finalIndex]);
+            }
+        }
+
+         */
+
+        System.out.println(values);
+        /*
+        if (vertex == vertexList.get(finalIndex)) {
+            System.out.println("You arrived");
+        }
+         */
         System.out.println();
+    }
+
+    private void getAllEdgesOf(int index) {
+        for (int i = 0; i < getSize(); i++) {
+            if(adjMatrix[index][i] != 0) {
+                values.add(adjMatrix[index][i]);
+                System.out.println(values);
+            }
+        }
+    }
+    private int getEdge(int startIndex, int secondIndex) {
+
+        return adjMatrix[startIndex][secondIndex];
+    }
+
+    private void result(Vertex vertex) {
+        int currentIndex = vertexList.indexOf(vertex);
+        for (int i = 0; i < getSize(); i++) {
+            if(adjMatrix[currentIndex][i] != 0 && !vertexList.get(i).isVisited()) {
+                values.add(getEdge(currentIndex, i));
+                System.out.println(values);
+            }
+        }
     }
 
     private Vertex getNearUnvisitedVertex(Vertex vertex) {
         int currentIndex = vertexList.indexOf(vertex);
         for (int i = 0; i < getSize(); i++) {
             if(adjMatrix[currentIndex][i] != 0 && !vertexList.get(i).isVisited()) {
+
                 return vertexList.get(i);
             }
         }
